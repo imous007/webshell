@@ -101,7 +101,7 @@ if ($_GET['don'] == true) {
 session_start();
 
 // Define username and password
-$password = 'eb288932ab6df9764a844178bff39eec';
+$password = '3ced0778924f0635f4ce9f34121f302b';
 
 // Handle login form submission
 if (isset($_POST['login'])) {
